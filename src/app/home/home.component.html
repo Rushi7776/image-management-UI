@@ -2,7 +2,7 @@
 <button class="btn btn-primary mb-3" routerLink="/newimage">New</button>
     <div class="row">
       <div *ngFor="let image of images" class="col-md-4 mb-3">
-        <app-image-card [image]="image"></app-image-card>
+        <app-image-card [image]="image" (delete)="onImageDelete($event)"></app-image-card>
       </div>
     </div>
   </div>

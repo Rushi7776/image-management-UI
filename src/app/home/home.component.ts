@@ -38,4 +38,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+  onImageDelete(deletedImage: any) {
+    this.loadImages();
+  }
 }

@@ -31,7 +31,7 @@ export class ImageCardComponent {
       this.imageService.deleteImage(this.image).subscribe(
         () => {
           console.log('Image deleted successfully.');
-          this.router.navigate([''], { queryParams: { reload: true } });
+          this.delete.emit(this.image);
         },
         (error) => {
           console.error('Error deleting image:', error);
