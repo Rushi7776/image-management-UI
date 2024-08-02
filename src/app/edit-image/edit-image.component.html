@@ -1,0 +1,19 @@
+<div class="container">
+    <h2>Edit Image</h2>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="user" class="form-label">User</label>
+        <input id="user" formControlName="user" class="form-control" type="text" />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" formControlName="description" class="form-control"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="url" class="form-label">Image URL</label>
+        <input id="url" formControlName="url" class="form-control" type="text" />
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">Save</button>
+    </form>
+  </div>
+  
