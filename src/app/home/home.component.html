@@ -1,9 +1,40 @@
 <div class="container mt-3">
-<button class="btn btn-primary mb-3" routerLink="/newimage">New</button>
-    <div class="row">
-      <div *ngFor="let image of images" class="col-md-4 mb-3">
-        <app-image-card [image]="image" (delete)="onImageDelete($event)"></app-image-card>
-      </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <input type="text" class="form-control" placeholder="Search by user or description" [(ngModel)]="searchQuery" (ngModelChange)="onSearch()">
+    </div>
+    <div class="col-md-6 text-end">
+      <button class="btn btn-primary mb-3" routerLink="/newimage">New</button>
     </div>
   </div>
-  
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">User</th>
+          <th scope="col">Created Date</th>
+          <th scope="col">Description</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let image of filteredImages | paginate: { itemsPerPage: pageSize, currentPage: page }">
+          <td><img [src]="image.url" class="img-thumbnail" style="max-width: 100px;" alt="Image"></td>
+          <td>{{ image.user }}</td>
+          <td>{{ image.dateCreated | date: 'short' }}</td>
+          <td>{{ image.description }}</td>
+          <td>
+            <div class="btn-group" role="group">
+              <button class="btn btn-primary mx-1" (click)="onEdit(image)">Edit</button>
+              <button class="btn btn-danger mx-1" (click)="onDelete(image)">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ImageService } from '../services/image.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-image-form',
@@ -14,7 +16,8 @@ export class ImageFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private imageService: ImageService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -27,8 +30,6 @@ export class ImageFormComponent implements OnInit {
   }
 
   private setDateCreated(): void {
-    // You might want to set this field value when submitting the form
-    // Alternatively, set this in onSubmit() method
     this.imageForm.addControl('dateCreated', this.fb.control(new Date().toISOString(), Validators.required));
   }
 
@@ -37,12 +38,22 @@ export class ImageFormComponent implements OnInit {
       this.imageService.addImage(this.imageForm.value).subscribe(
         response => {
           console.log('Image added:', response);
+          this.snackBar.open('Image added successfully!', 'Close', {
+            duration: 3000,
+          });
           this.router.navigate(['/']);
         },
         error => {
           console.error('Error adding image:', error);
+          this.snackBar.open('Error adding image. Please try again later.', 'Close', {
+            duration: 3000,
+          });
         }
       );
+    } else {
+      this.snackBar.open('Form is invalid. Please check your input.', 'Close', {
+        duration: 3000,
+      });
     }
   }
 }
